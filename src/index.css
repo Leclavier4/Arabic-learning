@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Jetons de couleur — clair par défaut, surchargés par la classe .dark
+ * (posée sur <html> par PreferencesContext, y compris en mode « auto »).
+ */
+:root {
+  --bg: #fbf8f1;
+  --surface: #ffffff;
+  --surface-alt: #f4f1e8;
+  --border: #e8e2d2;
+  --text: #24302a;
+  --text-muted: #5d6a61;
+  --text-faint: #8a958c;
+  --accent: #4a7047;
+  --accent-soft: #e3ece1;
+  --gold: #a88534;
+  --ring: #82a77e;
+  --mark: #f0dfa8;
+  /* Motif géométrique (étoile à huit branches) très discret en fond */
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%235F8A5B' stroke-opacity='0.07'%3E%3Crect x='25' y='25' width='22' height='22'/%3E%3Crect x='25' y='25' width='22' height='22' transform='rotate(45 36 36)'/%3E%3Ccircle cx='0' cy='0' r='7'/%3E%3Ccircle cx='72' cy='0' r='7'/%3E%3Ccircle cx='0' cy='72' r='7'/%3E%3Ccircle cx='72' cy='72' r='7'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+:root.dark {
+  --bg: #141a16;
+  --surface: #1c241f;
+  --surface-alt: #232d27;
+  --border: #2f3b33;
+  --text: #eef2ea;
+  --text-muted: #b4c0b5;
+  --text-faint: #7f8c82;
+  --accent: #a6c2a2;
+  --accent-soft: #2a3a2d;
+  --gold: #e3c878;
+  --ring: #a6c2a2;
+  --mark: #5a4a1e;
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23A6C2A2' stroke-opacity='0.05'%3E%3Crect x='25' y='25' width='22' height='22'/%3E%3Crect x='25' y='25' width='22' height='22' transform='rotate(45 36 36)'/%3E%3Ccircle cx='0' cy='0' r='7'/%3E%3Ccircle cx='72' cy='0' r='7'/%3E%3Ccircle cx='0' cy='72' r='7'/%3E%3Ccircle cx='72' cy='72' r='7'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  color-scheme: light;
+  -webkit-tap-highlight-color: transparent;
+}
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg);
+  background-image: var(--pattern);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: "Nunito", "Tajawal", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Interface en arabe : Tajawal en premier (plus doux que le fallback système). */
+html[lang="ar"] body {
+  font-family: "Tajawal", "Nunito", system-ui, sans-serif;
+}
+
+/* Contenu arabe à apprendre : Naskh lisible, hauteur de ligne généreuse pour les harakât. */
+.ar-content {
+  font-family: "Noto Naskh Arabic", "Amiri", "Tajawal", serif;
+  line-height: 1.9;
+  font-feature-settings: "kern", "liga", "calt";
+  unicode-bidi: isolate;
+}
+
+/* Focus visible net et accessible partout */
+:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 0.75rem;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Surlignage des mots du jour : soulignement doré doux, sans casser la liaison des lettres. */
+.mark-hit {
+  background: linear-gradient(transparent 62%, var(--mark) 62%);
+  color: inherit;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
