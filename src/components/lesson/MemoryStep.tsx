@@ -35,8 +35,8 @@ export function MemoryStep({
   if (alreadySaved) {
     return (
       <Card className="flex flex-col items-center gap-3 text-center">
-        <Heart size={32} className="text-clay-300" />
-        <h2 className="text-lg font-black text-[var(--text)]">{t.lesson.memory.savedTitle}</h2>
+        <Heart size={32} className="text-coral-300" />
+        <h2 className="text-lg font-extrabold text-[var(--text)]">{t.lesson.memory.savedTitle}</h2>
         {selected && <ArabicText text={selected.harakat} className="text-3xl text-[var(--accent)]" />}
         <p className="text-sm text-[var(--text-muted)]">{t.lesson.memory.savedText}</p>
         <Button fullWidth size="lg" onClick={onComplete}>
@@ -51,7 +51,7 @@ export function MemoryStep({
       <Card className="text-sm text-[var(--text-muted)]">{t.lesson.memory.intro}</Card>
 
       <Card>
-        <h3 className="mb-3 text-sm font-black uppercase tracking-wide text-[var(--text-faint)]">{t.lesson.memory.choose}</h3>
+        <h3 className="mb-3 text-sm font-extrabold uppercase tracking-wide text-[var(--text-faint)]">{t.lesson.memory.choose}</h3>
         <div className="flex flex-wrap gap-2" dir="rtl">
           {words.map((w) => (
             <button
@@ -62,7 +62,7 @@ export function MemoryStep({
               className={[
                 "rounded-full px-3.5 py-1 transition",
                 memoryWord === w.harakat
-                  ? "bg-sage-500 text-white dark:bg-sage-400 dark:text-[#13200f]"
+                  ? "bg-oasis-500 text-white dark:bg-oasis-400 dark:text-[#13200f]"
                   : "bg-[var(--surface-alt)] text-[var(--text)] hover:bg-[var(--accent-soft)]",
               ].join(" ")}
             >
@@ -81,7 +81,7 @@ export function MemoryStep({
               <WordMeaning word={selected} compact />
             </span>
           </div>
-          <label className="mb-2 block text-sm font-black uppercase tracking-wide text-[var(--text-faint)]" htmlFor="memory-text">
+          <label className="mb-2 block text-sm font-extrabold uppercase tracking-wide text-[var(--text-faint)]" htmlFor="memory-text">
             {t.lesson.memory.yourMemory}
           </label>
           <textarea
@@ -91,7 +91,7 @@ export function MemoryStep({
             placeholder={t.lesson.memory.placeholder}
             rows={4}
             dir="auto"
-            className="w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-3 text-[var(--text)] placeholder:text-[var(--text-faint)] focus:border-sage-400"
+            className="w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-3 text-[var(--text)] placeholder:text-[var(--text-faint)] focus:border-oasis-400"
           />
         </Card>
       )}

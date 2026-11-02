@@ -122,6 +122,7 @@ export interface ProgressState {
   currentDay: number; // n° de leçon absolu (peut dépasser LESSONS.length -> modulo)
   completedLessonsCount: number;
   lessonsWithoutHarakat: number; // leçons terminées avec les voyelles masquées (badge)
+  stars: number; // monnaie du jeu (cartes découvertes, étapes, coffres)
   learnedWords: Record<string, { cat: Category; day: number }>; // clé = harakat
   memories: Memory[];
   badges: string[];

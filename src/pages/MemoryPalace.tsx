@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react";
 import { Card } from "../components/ui/Card";
+import { PageMascot } from "../components/mascot/PageMascot";
 import { Pill } from "../components/ui/Pill";
 import { SpeakButton } from "../components/ui/SpeakButton";
 import { ArabicText } from "../components/ui/ArabicText";
@@ -16,21 +17,16 @@ export function MemoryPalace() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div>
-        <h1 className="flex flex-wrap items-baseline gap-x-2 text-2xl font-black text-[var(--text)]">
-          {t.memories.title}
-          {lang === "fr" && (
-            <span lang="ar" className="ar-content text-xl text-[var(--accent)]">
-              ذاكرتي
-            </span>
-          )}
-        </h1>
-        <p className="text-[var(--text-muted)]">{t.memories.subtitle}</p>
-      </div>
+      <PageMascot
+        title={lang === "fr" ? `${t.memories.title} · ذاكرتي` : t.memories.title}
+        subtitle={t.memories.subtitle}
+        message={t.mascot.pages.memories}
+        pose="idle"
+      />
 
       {state.memories.length === 0 ? (
         <Card className="flex flex-col items-center gap-2 py-10 text-center text-[var(--text-muted)]">
-          <Heart size={32} className="text-clay-300" />
+          <Heart size={32} className="text-coral-300" />
           {t.memories.empty}
         </Card>
       ) : (
@@ -50,7 +46,7 @@ export function MemoryPalace() {
                         </span>
                       )}
                     </div>
-                    <Pill tone="sage">
+                    <Pill tone="oasis">
                       <span aria-hidden>{CATEGORY_EMOJI[m.category]}</span>
                       {lang === "fr" ? t.categories[m.category] : CATEGORY_AR[m.category]}
                     </Pill>

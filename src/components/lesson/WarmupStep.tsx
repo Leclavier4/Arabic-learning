@@ -25,7 +25,7 @@ export function WarmupStep({ reviewWords, answers, onAnswer, onComplete }: Warmu
     return (
       <Card className="text-center">
         <Sparkles size={28} className="mx-auto mb-2 text-[var(--gold)]" />
-        <h2 className="text-lg font-black text-[var(--text)]">{t.lesson.warmup.firstTitle}</h2>
+        <h2 className="text-lg font-extrabold text-[var(--text)]">{t.lesson.warmup.firstTitle}</h2>
         <p className="mt-1 text-sm text-[var(--text-muted)]">{t.lesson.warmup.firstText}</p>
         <Button className="mt-4" onClick={onComplete} fullWidth>
           {t.lesson.warmup.letsGo}
@@ -50,7 +50,7 @@ export function WarmupStep({ reviewWords, answers, onAnswer, onComplete }: Warmu
               <ArabicText text={word.harakat} className="flex-1 text-2xl font-semibold text-[var(--text)]" />
               {answer !== undefined &&
                 (answer ? (
-                  <CheckCircle2 size={22} className="shrink-0 text-sage-500" />
+                  <CheckCircle2 size={22} className="shrink-0 text-oasis-500" />
                 ) : (
                   <CircleDashed size={22} className="shrink-0 text-[var(--text-faint)]" />
                 ))}

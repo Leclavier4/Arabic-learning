@@ -2,19 +2,23 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 import type { Lang } from "../types";
 import { DICTIONARIES, type Dict } from "../i18n";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { GAME_DEFAULTS } from "../config/game";
+import { setSoundEnabled } from "../services/sound";
+import { setEffectsReduced } from "../services/confetti";
 
 /**
- * Préférences d'affichage, indépendantes de la progression :
+ * Préférences d'affichage et de jeu, indépendantes de la progression :
  * - langue d'interface (fr → LTR, ar → RTL, appliquée sur <html>)
  * - affichage des harakât (voyelles) dans le contenu arabe
  * - thème clair / sombre / auto
+ * - sons on/off et « réduire les animations » (mode jeu)
  * - onboarding déjà vu ou non
  * Toutes sont persistées dans localStorage.
  */
 
 export type ThemeChoice = "light" | "dark" | "system";
 
-export const PREFERENCE_KEYS = ["lang", "harakat", "theme", "onboarded"];
+export const PREFERENCE_KEYS = ["lang", "harakat", "theme", "onboarded", "sound", "reducedMotion"];
 
 interface PreferencesValue {
   lang: Lang;
@@ -27,6 +31,10 @@ interface PreferencesValue {
   theme: ThemeChoice;
   setTheme: (theme: ThemeChoice) => void;
   isDark: boolean;
+  soundOn: boolean;
+  setSoundOn: (on: boolean) => void;
+  reducedMotion: boolean;
+  setReducedMotion: (on: boolean) => void;
   onboarded: boolean;
   completeOnboarding: () => void;
 }
@@ -49,6 +57,8 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
   const [lang, setLang] = useLocalStorage<Lang>("lang", guessLang);
   const [showHarakat, setShowHarakat] = useLocalStorage<boolean>("harakat", true);
   const [theme, setTheme] = useLocalStorage<ThemeChoice>("theme", "system");
+  const [soundOn, setSoundOn] = useLocalStorage<boolean>("sound", GAME_DEFAULTS.sound);
+  const [reducedMotion, setReducedMotion] = useLocalStorage<boolean>("reducedMotion", GAME_DEFAULTS.reducedMotion);
   const [onboarded, setOnboarded] = useLocalStorage<boolean>("onboarded", false);
   const [systemDark, setSystemDark] = useState(prefersDark);
 
@@ -73,8 +83,15 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isDark ? "#1A221C" : "#5F8A5B");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isDark ? "#17202A" : "#1C8C82");
   }, [isDark]);
+
+  // Synchronise les services hors React (sons, confettis, animations CSS).
+  useEffect(() => setSoundEnabled(soundOn), [soundOn]);
+  useEffect(() => {
+    setEffectsReduced(reducedMotion);
+    document.documentElement.classList.toggle("reduce-motion", reducedMotion);
+  }, [reducedMotion]);
 
   const toggleHarakat = useCallback(() => setShowHarakat((s) => !s), [setShowHarakat]);
   const completeOnboarding = useCallback(() => setOnboarded(true), [setOnboarded]);
@@ -91,10 +108,14 @@ export function PreferencesProvider({ children }: { children: React.ReactNode })
       theme,
       setTheme,
       isDark,
+      soundOn,
+      setSoundOn,
+      reducedMotion,
+      setReducedMotion,
       onboarded,
       completeOnboarding,
     }),
-    [lang, setLang, dir, showHarakat, setShowHarakat, toggleHarakat, theme, setTheme, isDark, onboarded, completeOnboarding]
+    [lang, setLang, dir, showHarakat, setShowHarakat, toggleHarakat, theme, setTheme, isDark, soundOn, setSoundOn, reducedMotion, setReducedMotion, onboarded, completeOnboarding]
   );
 
   return <PreferencesContext.Provider value={value}>{children}</PreferencesContext.Provider>;

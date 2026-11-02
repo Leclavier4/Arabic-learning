@@ -4,6 +4,7 @@ import { HashRouter } from "react-router-dom";
 import App from "./App";
 import { PreferencesProvider } from "./context/PreferencesContext";
 import { ProgressProvider } from "./context/ProgressContext";
+import { MascotProvider } from "./context/MascotContext";
 import "./index.css";
 
 // HashRouter : aucune config serveur nécessaire au déploiement (Vercel statique, PWA hors-ligne).
@@ -11,9 +12,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HashRouter>
       <PreferencesProvider>
-        <ProgressProvider>
-          <App />
-        </ProgressProvider>
+        <MascotProvider>
+          <ProgressProvider>
+            <App />
+          </ProgressProvider>
+        </MascotProvider>
       </PreferencesProvider>
     </HashRouter>
   </React.StrictMode>

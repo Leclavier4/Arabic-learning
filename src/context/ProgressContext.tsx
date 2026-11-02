@@ -18,6 +18,7 @@ import { getRankForXp } from "../constants/ranks";
 import { BADGES } from "../constants/badges";
 import { STEP_XP, LESSON_STEPS } from "../constants/steps";
 import { uid } from "../services/id";
+import { STAR_REWARDS } from "../config/game";
 import { PREFERENCE_KEYS } from "./PreferencesContext";
 
 const STORAGE_KEY = "progress";
@@ -50,6 +51,7 @@ function createFreshState(day: number, date: string): ProgressState {
     lastCompletedDate: null,
     currentDay: day,
     completedLessonsCount: 0,
+    stars: 0,
     lessonsWithoutHarakat: 0,
     learnedWords: {},
     memories: [],
@@ -116,10 +118,14 @@ function computeNewlyUnlockedBadgeIds(state: ProgressState): string[] {
     .map(([id]) => id);
 }
 
-/** Attribue l'XP d'une étape une seule fois (idempotent). */
-function awardStepXp(lesson: LessonState, step: LessonStepId): { lesson: LessonState; xp: number } {
-  if (lesson.xpAwardedSteps.includes(step)) return { lesson, xp: 0 };
-  return { lesson: { ...lesson, xpAwardedSteps: [...lesson.xpAwardedSteps, step] }, xp: STEP_XP[step] };
+/** Attribue l'XP et les étoiles d'une étape une seule fois (idempotent). */
+function awardStepXp(lesson: LessonState, step: LessonStepId): { lesson: LessonState; xp: number; stars: number } {
+  if (lesson.xpAwardedSteps.includes(step)) return { lesson, xp: 0, stars: 0 };
+  return {
+    lesson: { ...lesson, xpAwardedSteps: [...lesson.xpAwardedSteps, step] },
+    xp: STEP_XP[step],
+    stars: step === "complete" ? STAR_REWARDS.lesson : STAR_REWARDS.step,
+  };
 }
 
 // ── Contexte ─────────────────────────────────────────────────────────────
@@ -236,8 +242,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const completeWarmupStep = useCallback(
     () =>
       mutate((prev) => {
-        const { lesson, xp } = awardStepXp(prev.lesson, "warmup");
-        return { ...prev, xp: prev.xp + xp, lesson };
+        const { lesson, xp, stars } = awardStepXp(prev.lesson, "warmup");
+        return { ...prev, xp: prev.xp + xp, stars: prev.stars + stars, lesson };
       }),
     [mutate]
   );
@@ -249,7 +255,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       mutate((prev) =>
         prev.lesson.flippedWords.includes(wordId)
           ? prev
-          : { ...prev, lesson: { ...prev.lesson, flippedWords: [...prev.lesson.flippedWords, wordId] } }
+          : {
+              ...prev,
+              stars: prev.stars + STAR_REWARDS.card, // chaque carte découverte = une étoile
+              lesson: { ...prev.lesson, flippedWords: [...prev.lesson.flippedWords, wordId] },
+            }
       ),
     [mutate]
   );
@@ -257,13 +267,13 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const completeDiscoverStep = useCallback(
     () =>
       mutate((prev) => {
-        const { lesson, xp } = awardStepXp(prev.lesson, "discover");
+        const { lesson, xp, stars } = awardStepXp(prev.lesson, "discover");
         const learnedWords = { ...prev.learnedWords };
         for (const w of todaysLesson.words) {
           // On garde le jour de première rencontre (les connecteurs reviennent en rotation).
           learnedWords[w.harakat] ??= { cat: w.cat, day: prev.currentDay };
         }
-        return { ...prev, xp: prev.xp + xp, learnedWords, lesson };
+        return { ...prev, xp: prev.xp + xp, stars: prev.stars + stars, learnedWords, lesson };
       }),
     [mutate, todaysLesson]
   );
@@ -283,8 +293,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const completeBuildStep = useCallback(
     () =>
       mutate((prev) => {
-        const { lesson, xp } = awardStepXp(prev.lesson, "build");
-        return { ...prev, xp: prev.xp + xp, lesson };
+        const { lesson, xp, stars } = awardStepXp(prev.lesson, "build");
+        return { ...prev, xp: prev.xp + xp, stars: prev.stars + stars, lesson };
       }),
     [mutate]
   );
@@ -315,8 +325,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           day: prev.currentDay,
           date: todayKey(),
         };
-        const { lesson, xp } = awardStepXp(prev.lesson, "memory");
-        return { ...prev, xp: prev.xp + xp, memories: [memory, ...prev.memories], lesson };
+        const { lesson, xp, stars } = awardStepXp(prev.lesson, "memory");
+        return { ...prev, xp: prev.xp + xp, stars: prev.stars + stars, memories: [memory, ...prev.memories], lesson };
       }),
     [mutate, todaysLesson]
   );
@@ -326,8 +336,8 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const completeReadStep = useCallback(
     () =>
       mutate((prev) => {
-        const { lesson, xp } = awardStepXp(prev.lesson, "read");
-        return { ...prev, xp: prev.xp + xp, lesson: { ...lesson, readDone: true } };
+        const { lesson, xp, stars } = awardStepXp(prev.lesson, "read");
+        return { ...prev, xp: prev.xp + xp, stars: prev.stars + stars, lesson: { ...lesson, readDone: true } };
       }),
     [mutate]
   );
@@ -348,6 +358,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         return {
           ...prev,
           xp: prev.xp + practice.xp + done.xp,
+          stars: prev.stars + practice.stars + done.stars,
           streak,
           bestStreak: Math.max(prev.bestStreak, streak),
           lastCompletedDate: today,

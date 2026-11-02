@@ -3,40 +3,45 @@
 @tailwind utilities;
 
 /*
- * Jetons de couleur — clair par défaut, surchargés par la classe .dark
- * (posée sur <html> par PreferencesContext, y compris en mode « auto »).
+ * Jetons de couleur — univers « désert & oasis ». Clair par défaut,
+ * surchargés par la classe .dark (nuit dans le désert) posée sur <html>.
  */
 :root {
-  --bg: #fbf8f1;
+  --bg: #fff9ee;
+  --bg-deep: #fcefd6;
   --surface: #ffffff;
-  --surface-alt: #f4f1e8;
-  --border: #e8e2d2;
-  --text: #24302a;
-  --text-muted: #5d6a61;
-  --text-faint: #8a958c;
-  --accent: #4a7047;
-  --accent-soft: #e3ece1;
-  --gold: #a88534;
-  --ring: #82a77e;
-  --mark: #f0dfa8;
-  /* Motif géométrique (étoile à huit branches) très discret en fond */
-  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%235F8A5B' stroke-opacity='0.07'%3E%3Crect x='25' y='25' width='22' height='22'/%3E%3Crect x='25' y='25' width='22' height='22' transform='rotate(45 36 36)'/%3E%3Ccircle cx='0' cy='0' r='7'/%3E%3Ccircle cx='72' cy='0' r='7'/%3E%3Ccircle cx='0' cy='72' r='7'/%3E%3Ccircle cx='72' cy='72' r='7'/%3E%3C/g%3E%3C/svg%3E");
+  --surface-alt: #fbf1df;
+  --border: #f0dfc0;
+  --text: #3a2c1c;
+  --text-muted: #6e5a42;
+  --text-faint: #a08a6c;
+  --accent: #167469;
+  --accent-soft: #cff3ee;
+  --gold: #c99a1e;
+  --ring: #35b9ac;
+  --mark: #ffe07a;
+  --dune-1: #f8dfb0;
+  --dune-2: #f1c985;
+  --sky-glow: #fff3c4;
 }
 
 :root.dark {
-  --bg: #141a16;
-  --surface: #1c241f;
-  --surface-alt: #232d27;
-  --border: #2f3b33;
-  --text: #eef2ea;
-  --text-muted: #b4c0b5;
-  --text-faint: #7f8c82;
-  --accent: #a6c2a2;
-  --accent-soft: #2a3a2d;
-  --gold: #e3c878;
-  --ring: #a6c2a2;
-  --mark: #5a4a1e;
-  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23A6C2A2' stroke-opacity='0.05'%3E%3Crect x='25' y='25' width='22' height='22'/%3E%3Crect x='25' y='25' width='22' height='22' transform='rotate(45 36 36)'/%3E%3Ccircle cx='0' cy='0' r='7'/%3E%3Ccircle cx='72' cy='0' r='7'/%3E%3Ccircle cx='0' cy='72' r='7'/%3E%3Ccircle cx='72' cy='72' r='7'/%3E%3C/g%3E%3C/svg%3E");
+  --bg: #17202a;
+  --bg-deep: #1d2833;
+  --surface: #213040;
+  --surface-alt: #283a4b;
+  --border: #33485c;
+  --text: #fdf6e8;
+  --text-muted: #cdbfa6;
+  --text-faint: #8f9cab;
+  --accent: #6fd3c8;
+  --accent-soft: #1d4a4d;
+  --gold: #ebcb6b;
+  --ring: #6fd3c8;
+  --mark: #7a5c12;
+  --dune-1: #2a3846;
+  --dune-2: #324456;
+  --sky-glow: #22303e;
 }
 
 * {
@@ -52,40 +57,57 @@ html.dark {
 }
 
 body {
-  background-color: var(--bg);
-  background-image: var(--pattern);
-  background-attachment: fixed;
+  background: var(--bg);
   color: var(--text);
-  font-family: "Nunito", "Tajawal", ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: "Baloo 2", "Baloo Bhaijaan 2", Nunito, ui-rounded, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  overscroll-behavior-y: none;
 }
 
-/* Interface en arabe : Tajawal en premier (plus doux que le fallback système). */
+/* Interface en arabe : la version arabe de la même famille Baloo. */
 html[lang="ar"] body {
-  font-family: "Tajawal", "Nunito", system-ui, sans-serif;
+  font-family: "Baloo Bhaijaan 2", "Baloo 2", Tajawal, system-ui, sans-serif;
 }
 
-/* Contenu arabe à apprendre : Naskh lisible, hauteur de ligne généreuse pour les harakât. */
+/* Contenu arabe à apprendre : police ronde, hauteur de ligne généreuse pour les harakât. */
 .ar-content {
-  font-family: "Noto Naskh Arabic", "Amiri", "Tajawal", serif;
-  line-height: 1.9;
-  font-feature-settings: "kern", "liga", "calt";
+  font-family: "Baloo Bhaijaan 2", "Noto Naskh Arabic", Tajawal, sans-serif;
+  line-height: 1.85;
   unicode-bidi: isolate;
+}
+
+/* ── Boutons « jelly » : épaisseur en bas, s'enfoncent puis rebondissent ── */
+.btn-jelly {
+  --btn-edge: rgba(0, 0, 0, 0.18);
+  box-shadow: 0 5px 0 var(--btn-edge);
+  transform: translateY(0);
+  transition:
+    transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.12s ease,
+    background-color 0.15s ease;
+}
+.btn-jelly:enabled:active {
+  transform: translateY(4px) scale(0.98);
+  box-shadow: 0 1px 0 var(--btn-edge);
+}
+
+/* Carte « jeu » : bord épais en bas, comme un bloc de construction. */
+.game-card {
+  box-shadow: 0 5px 0 var(--border);
 }
 
 /* Focus visible net et accessible partout */
 :focus-visible {
   outline: 3px solid var(--ring);
-  outline-offset: 2px;
-  border-radius: 0.75rem;
+  outline-offset: 3px;
+  border-radius: 1rem;
 }
 
 ::selection {
   background: var(--accent-soft);
 }
 
-/* Scrollbar discrète */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -98,13 +120,62 @@ html[lang="ar"] body {
   background: transparent;
 }
 
-/* Surlignage des mots du jour : soulignement doré doux, sans casser la liaison des lettres. */
+/* Surlignage des mots du jour : surligneur jaune soleil (n'altère pas la liaison des lettres). */
 .mark-hit {
-  background: linear-gradient(transparent 62%, var(--mark) 62%);
+  background: linear-gradient(transparent 58%, var(--mark) 58%);
   color: inherit;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
+/* Halo qui pulse autour du nœud du jour (désactivé en « animations réduites »). */
+@keyframes node-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+.node-pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--pulse-color, #ffcc3d);
+  animation: node-pulse 1.6s ease-out infinite;
+  z-index: -1;
+}
+
+/* Reflet brillant qui traverse un autocollant fraîchement débloqué. */
+@keyframes sticker-shine {
+  0%,
+  70% {
+    transform: translateX(-120%) rotate(20deg);
+  }
+  100% {
+    transform: translateX(220%) rotate(20deg);
+  }
+}
+.sticker-shine::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+  animation: sticker-shine 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Réglage « réduire les animations » (et préférence système) */
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

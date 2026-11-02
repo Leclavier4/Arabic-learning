@@ -22,7 +22,7 @@ export function WordMeaning({ word, compact = false }: { word: Word; compact?: b
 
   return (
     <span className="flex flex-col items-center gap-0.5">
-      <span className={`font-black text-[var(--text)] ${compact ? "text-sm" : "text-base"}`}>{primary}</span>
+      <span className={`font-extrabold text-[var(--text)] ${compact ? "text-sm" : "text-base"}`}>{primary}</span>
       {secondary && <span className="text-xs text-[var(--text-muted)]">{secondary}</span>}
     </span>
   );

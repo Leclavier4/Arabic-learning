@@ -1,16 +1,16 @@
 import React from "react";
 
-type Tone = "sage" | "sand" | "gold" | "clay" | "neutral";
+type Tone = "oasis" | "sand" | "sun" | "coral" | "neutral";
 
 interface PillProps extends React.HTMLAttributes<HTMLSpanElement> {
   tone?: Tone;
 }
 
 const TONES: Record<Tone, string> = {
-  sage: "bg-sage-100 text-sage-700 dark:bg-sage-400/20 dark:text-sage-200",
-  sand: "bg-sand-100 text-[#6b4f1d] dark:bg-sand-300/20 dark:text-sand-200",
-  gold: "bg-gold-200/70 text-[#6a5317] dark:bg-gold-300/20 dark:text-gold-200",
-  clay: "bg-clay-100 text-[#8a3f29] dark:bg-clay-300/20 dark:text-clay-200",
+  oasis: "bg-oasis-100 text-oasis-700 dark:bg-oasis-400/20 dark:text-oasis-200",
+  sand: "bg-sand-100 text-sand-600 dark:bg-sand-300/20 dark:text-sand-200",
+  sun: "bg-sun-200 text-sun-600 dark:bg-sun-300/20 dark:text-sun-200",
+  coral: "bg-coral-100 text-coral-500 dark:bg-coral-300/20 dark:text-coral-200",
   neutral: "bg-[var(--surface-alt)] text-[var(--text-muted)]",
 };
 

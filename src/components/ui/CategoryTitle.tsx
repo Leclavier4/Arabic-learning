@@ -6,7 +6,7 @@ import { useLang } from "../../hooks/useLang";
 export function CategoryTitle({ cat, className = "" }: { cat: Category; className?: string }) {
   const { t, lang } = useLang();
   return (
-    <h3 className={`flex items-center gap-2 text-sm font-black text-[var(--text-muted)] ${className}`}>
+    <h3 className={`flex items-center gap-2 text-sm font-extrabold text-[var(--text-muted)] ${className}`}>
       <span aria-hidden>{CATEGORY_EMOJI[cat]}</span>
       {lang === "fr" && <span className="uppercase tracking-wide">{t.categories[cat]}</span>}
       {lang === "fr" && <span className="text-[var(--text-faint)]">·</span>}

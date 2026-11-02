@@ -5,50 +5,62 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Interface : Nunito pour le latin, Tajawal prend le relais pour les glyphes arabes.
-        sans: ["Nunito", "Tajawal", "ui-rounded", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
-        // Contenu arabe à apprendre : Naskh classique, excellent rendu des harakât.
-        naskh: ["'Noto Naskh Arabic'", "Amiri", "Tajawal", "serif"],
+        // Interface : Baloo 2 (latin, rond et amical) + Baloo Bhaijaan 2 (même famille, en arabe).
+        sans: ["'Baloo 2'", "'Baloo Bhaijaan 2'", "Nunito", "ui-rounded", "system-ui", "sans-serif"],
+        // Contenu arabe à apprendre : police ronde pour enfants, harakât bien lisibles.
+        arabic: ["'Baloo Bhaijaan 2'", "'Noto Naskh Arabic'", "Tajawal", "sans-serif"],
       },
       colors: {
-        // Palette douce inspirée de l'esthétique arabe : sauge, sable, crème, or discret.
-        cream: "#FBF8F1",
-        sage: {
-          50: "#F2F6F1",
-          100: "#E3ECE1",
-          200: "#C8D9C5",
-          300: "#A6C2A2",
-          400: "#82A77E",
-          500: "#5F8A5B",
-          600: "#4A7047",
-          700: "#3A5838",
+        // Univers « désert & oasis » : gai mais doux pour les yeux.
+        cream: "#FFFAF0",
+        oasis: {
+          50: "#ECFAF8",
+          100: "#CFF3EE",
+          200: "#A2E6DE",
+          300: "#6FD3C8",
+          400: "#35B9AC",
+          500: "#1C8C82",
+          600: "#167469",
+          700: "#115A52",
         },
         sand: {
-          50: "#FBF6EC",
-          100: "#F5EAD5",
-          200: "#EBD7B0",
-          300: "#DFC089",
-          400: "#CFA563",
+          50: "#FFF9EE",
+          100: "#FCEFD6",
+          200: "#F8DFB0",
+          300: "#F1C985",
+          400: "#E5AE5C",
+          500: "#C98E3E",
+          600: "#A06F2C",
+        },
+        coral: {
+          100: "#FFE4DE",
+          200: "#FFC6B8",
+          300: "#FF9C85",
+          400: "#F57A5F",
+          500: "#D9583A",
+        },
+        sun: {
+          100: "#FFF7D6",
+          200: "#FFEFB0",
+          300: "#FFE07A",
+          400: "#FFCC3D",
+          500: "#E8AE00",
+          600: "#B98A00",
         },
         gold: {
-          200: "#F0DFA8",
-          300: "#E3C878",
-          400: "#C9A54A",
+          200: "#F6E3A6",
+          300: "#EBCB6B",
+          400: "#D4AA3A",
           500: "#A88534",
-        },
-        clay: {
-          100: "#F7E3DC",
-          200: "#EEC4B6",
-          300: "#DE9C86",
-          400: "#C9775E",
         },
       },
       borderRadius: {
         "3xl": "1.75rem",
+        "4xl": "2.25rem",
       },
       boxShadow: {
-        soft: "0 4px 24px -6px rgba(74, 112, 71, 0.14), 0 2px 8px -2px rgba(74, 112, 71, 0.08)",
-        softer: "0 2px 12px -2px rgba(74, 112, 71, 0.10)",
+        soft: "0 6px 24px -8px rgba(160, 111, 44, 0.25), 0 2px 8px -2px rgba(160, 111, 44, 0.10)",
+        softer: "0 3px 14px -4px rgba(160, 111, 44, 0.18)",
       },
     },
   },

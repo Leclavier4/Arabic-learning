@@ -9,7 +9,7 @@ export function NotFound() {
   return (
     <Card className="flex flex-col items-center gap-3 py-12 text-center">
       <span className="text-4xl">🧭</span>
-      <h1 className="text-xl font-black text-[var(--text)]">{t.notFound.title}</h1>
+      <h1 className="text-xl font-extrabold text-[var(--text)]">{t.notFound.title}</h1>
       <p className="text-[var(--text-muted)]">{t.notFound.text}</p>
       <Button onClick={() => navigate("/")}>{t.notFound.back}</Button>
     </Card>

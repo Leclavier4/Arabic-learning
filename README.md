@@ -1,13 +1,36 @@
 # كلماتي · Kalimati
 
-Apprends **20 mots d'arabe par jour**, à ton rythme : flashcards vocalisées,
-phrases que tu écris toi-même, souvenirs personnels, lecture à voix haute,
-et une touche de gamification (grades, série, badges, cadeau surprise
-chaque jour). Pensé pour les débutants, mobile-first, installable comme une
-vraie app (PWA) et utilisable hors-ligne.
+Apprends **20 mots d'arabe par jour** en jouant avec **Fenek (فَنَك)**, un
+petit fennec du désert : flashcards vocalisées, phrases que tu écris
+toi-même, souvenirs personnels, lecture à voix haute, carte-parcours façon
+Duolingo, étoiles, coffre au trésor et album d'autocollants. Pensé pour les
+enfants (et agréable pour tous), mobile-first, installable comme une vraie
+app (PWA) et utilisable hors-ligne.
 
 Aucun backend, aucune base de données, aucun compte : tout est sauvegardé
 dans le `localStorage` du navigateur.
+
+## 🎮 Mode jeu
+
+- **Fenek, la mascotte** : fennec dessiné en SVG inline et animé avec Framer
+  Motion (poses `idle`, `wave`, `cheer`, `think`, `sleep`, `celebrate`).
+  Présente sur chaque écran, avec des bulles bilingues qui varient. Elle
+  encourage, félicite, fait la fête aux montées de grade et dort une fois la
+  leçon du jour finie. Elle regarde vers la droite en français et vers la
+  gauche en arabe. Touche-la, elle te répond !
+- **Carte-parcours** : les leçons sont des nœuds sur le chemin de l'oasis
+  (terminé ✓, aujourd'hui ⭐ qui pulse, futur 🔒) avec palmiers, oasis et
+  dunes. Fenek marche jusqu'au nœud du jour.
+- **HUD** toujours visible : grade, barre d'XP, série 🔥, étoiles ⭐, langue,
+  voyelles (حَ) et bouton son. Les gains d'XP et d'étoiles s'envolent en « +N ».
+- **Leçon en « pas de pierre »** : Fenek saute de pierre en pierre à chaque
+  étape validée. Chaque nouvelle flashcard rapporte une étoile.
+- **Coffre au trésor** de fin de journée qui s'ouvre sur le cadeau du jour.
+- **مجموعتي / Ma collection** : album d'autocollants (badges et grades).
+- **Sons** générés à la volée (Web Audio, aucun fichier), bouton muet,
+  option **« Réduire les animations »**. Feedback toujours positif.
+- Pour renommer la mascotte ou changer les récompenses en étoiles, modifie
+  `src/config/game.ts`.
 
 ## ✨ Fonctionnalités
 
@@ -29,9 +52,10 @@ dans le `localStorage` du navigateur.
   4. **اقرأ الفقرة / Lire le paragraphe** — paragraphe arabe vocalisé de 7
      phrases généré côté client (gabarits grammaticaux, aucune IA).
   5. **تدرّب في الحياة / Pratiquer** — raconter sa journée à un proche.
-- **Gamification** : XP, 6 grades bilingues (مبتدئ Débutant → سيّد الكلمات
-  Maître des mots) avec confettis, série 🔥 + record, 8 badges, cadeau du jour
-  (vidéo/podcast réel, devinette arabe ou fun fact) avec effet d'ouverture.
+- **Gamification** : XP, 6 grades bilingues (فَنَكٌ صَغِير Petit fennec →
+  سُلْطَانُ الكَلِمَات Sultan des mots) avec confettis, série 🔥 + record,
+  étoiles, 8 badges, cadeau du jour (vidéo/podcast réel, devinette arabe ou
+  fun fact) dans un coffre au trésor.
 - **Bouton « حَ »** pour afficher / masquer les harakât partout
   (badge spécial si tu termines une leçon sans voyelles 🌙).
 - **كلماتي / Mes mots** : tous les mots appris, filtrables par catégorie,
@@ -44,8 +68,10 @@ dans le `localStorage` du navigateur.
 
 React 18 + Vite + TypeScript, Tailwind CSS (propriétés logiques `start/end`,
 variantes `rtl:`), Framer Motion, lucide-react, canvas-confetti,
-react-router-dom. Polices Google : Noto Naskh Arabic (contenu), Tajawal
-(interface arabe), Nunito (interface française).
+react-router-dom. Polices Google rondes : Baloo 2 (latin) et Baloo
+Bhaijaan 2 (arabe, harakât lisibles), avec Noto Naskh Arabic en secours.
+Mascotte, décor, coffre et sons sont générés en SVG/Web Audio : aucun
+fichier externe.
 
 ## 📂 Structure du projet
 
@@ -58,29 +84,34 @@ public/
 scripts/
   generate-icons.mjs  régénère les icônes PNG (npm run icons)
 src/
+  config/             game.ts (nom de la mascotte, récompenses en étoiles)
   data/               wordbank.js, gifts.js (contenu) + déclarations .d.ts
   i18n/               fr.ts, ar.ts (textes d'interface), index.ts
   types/              types TypeScript partagés
   constants/          grades, badges, étapes, catégories
   services/           arabic (normalisation, détection, surlignage),
-                      paragraph, speech, storage, date, confetti…
+                      paragraph, speech, sound (effets Web Audio),
+                      storage, date, confetti…
   hooks/              useLang, useHarakat, useTheme, useProgress,
-                      useLesson, useLocalStorage
-  context/            PreferencesContext (langue/RTL, voyelles, thème),
-                      ProgressContext (progression + logique métier)
+                      useLesson, useMascot, useLocalStorage
+  context/            PreferencesContext (langue/RTL, voyelles, thème,
+                      sons, animations réduites), MascotContext (réactions
+                      de la mascotte), ProgressContext (progression, XP, étoiles)
   components/
-    ui/               Button, Card, Pill, ProgressBar, ArabicText,
+    mascot/           Fennec (SVG animé), Mascot (+ bulle), SpeechBubble,
+                      PageMascot
+    game/             GameHud, PathMap, MapDecor, StepStones,
+                      TreasureChest, StarBurst, DesertBackdrop
+    ui/               Button (« jelly »), Card, Pill, ArabicText,
                       SpeakButton, Toast, CategoryTitle, Ornament
-    layout/           AppShell, Header, BottomNav, LanguageSwitch,
-                      HarakatToggle, ThemeToggle, GlobalCelebrations,
-                      SpeechNotice
-    dashboard/        TodayCard, RankCard, StreakCard, BadgesGrid
+    layout/           AppShell, BottomNav, LanguageSwitch, HarakatToggle,
+                      ThemeToggle, GlobalCelebrations, SpeechNotice
     lesson/           WarmupStep, Flashcard, DiscoverStep,
                       BuildSentencesStep, MemoryStep, ReadParagraphStep,
-                      PracticeStep, LessonCompleteScreen, GiftCard,
-                      StepProgressHeader, WordMeaning
-  pages/              Onboarding, Dashboard, Lesson, MyWords,
-                      MemoryPalace, Settings, NotFound
+                      PracticeStep, LessonCompleteScreen, GiftCard (coffre),
+                      WordMeaning
+  pages/              Onboarding, Dashboard (carte), Lesson, MyWords,
+                      Collection, MemoryPalace, Settings, NotFound
 ```
 
 ## 🚀 Lancer en local

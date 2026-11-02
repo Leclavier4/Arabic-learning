@@ -7,6 +7,7 @@ import { MemoryPalace } from "./pages/MemoryPalace";
 import { Settings } from "./pages/Settings";
 import { NotFound } from "./pages/NotFound";
 import { Onboarding } from "./pages/Onboarding";
+import { Collection } from "./pages/Collection";
 import { usePreferences } from "./context/PreferencesContext";
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/lesson" element={<LessonPage />} />
         <Route path="/my-words" element={<MyWords />} />
+        <Route path="/collection" element={<Collection />} />
         <Route path="/memory-palace" element={<MemoryPalace />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />

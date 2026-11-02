@@ -5,12 +5,12 @@ import type { Rank } from "../types";
  * XP gagnés par étape de leçon validée (voir constants/steps.ts).
  */
 export const RANKS: Rank[] = [
-  { id: "beginner", name: { ar: "مُبْتَدِئ", fr: "Débutant" }, minXp: 0, emoji: "🌱" },
-  { id: "explorer", name: { ar: "مُسْتَكْشِف", fr: "Explorateur" }, minXp: 150, emoji: "🧭" },
-  { id: "speaker", name: { ar: "مُتَحَدِّث", fr: "Locuteur" }, minXp: 400, emoji: "💬" },
-  { id: "storyteller", name: { ar: "رَاوٍ", fr: "Conteur" }, minXp: 800, emoji: "📖" },
-  { id: "fluent-friend", name: { ar: "صَدِيقٌ طَلِيق", fr: "Ami fluide" }, minXp: 1400, emoji: "🤝" },
-  { id: "word-master", name: { ar: "سَيِّدُ الكَلِمَات", fr: "Maître des mots" }, minXp: 2200, emoji: "👑" },
+  { id: "little-fennec", name: { ar: "فَنَكٌ صَغِير", fr: "Petit fennec" }, minXp: 0, emoji: "🦊" },
+  { id: "dune-explorer", name: { ar: "مُسْتَكْشِفُ الكُثْبَان", fr: "Explorateur des dunes" }, minXp: 150, emoji: "🏜️" },
+  { id: "oasis-friend", name: { ar: "صَدِيقُ الوَاحَة", fr: "Ami de l'oasis" }, minXp: 400, emoji: "🌴" },
+  { id: "caravan-teller", name: { ar: "رَاوِي القَافِلَة", fr: "Conteur de la caravane" }, minXp: 800, emoji: "🐪" },
+  { id: "desert-star", name: { ar: "نَجْمُ الصَّحْرَاء", fr: "Étoile du désert" }, minXp: 1400, emoji: "🌟" },
+  { id: "word-sultan", name: { ar: "سُلْطَانُ الكَلِمَات", fr: "Sultan des mots" }, minXp: 2200, emoji: "👑" },
 ];
 
 export function getRankForXp(xp: number): Rank {

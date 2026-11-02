@@ -32,7 +32,7 @@ export function ReadParagraphStep({ words, readDone, onMarkRead, onContinue }: R
 
       <Card>
         <div className="mb-3 flex items-center justify-between gap-2">
-          <h3 className="text-sm font-black uppercase tracking-wide text-[var(--text-faint)]">{t.lesson.read.story}</h3>
+          <h3 className="text-sm font-extrabold uppercase tracking-wide text-[var(--text-faint)]">{t.lesson.read.story}</h3>
           <button
             type="button"
             onClick={() => speak(text, 0.75)}
@@ -67,7 +67,7 @@ export function ReadParagraphStep({ words, readDone, onMarkRead, onContinue }: R
 
       {readDone ? (
         <>
-          <Card className="text-center text-sm font-bold text-sage-600 dark:text-sage-300">{t.lesson.read.bravo}</Card>
+          <Card className="text-center text-sm font-bold text-oasis-600 dark:text-oasis-300">{t.lesson.read.bravo}</Card>
           <Button fullWidth size="lg" onClick={onContinue}>
             {t.common.continue}
           </Button>

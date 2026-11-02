@@ -26,8 +26,8 @@ export function PracticeStep({ words, onFinish }: PracticeStepProps) {
   return (
     <div className="flex flex-col gap-4">
       <Card className="flex flex-col items-center gap-2 text-center">
-        <MessageCircleHeart size={32} className="text-sage-400" />
-        <h2 className="text-lg font-black text-[var(--text)]">{t.lesson.practice.title}</h2>
+        <MessageCircleHeart size={32} className="text-oasis-400" />
+        <h2 className="text-lg font-extrabold text-[var(--text)]">{t.lesson.practice.title}</h2>
         <p className="text-sm text-[var(--text-muted)]">{t.lesson.practice.text}</p>
       </Card>
 
@@ -48,7 +48,7 @@ export function PracticeStep({ words, onFinish }: PracticeStepProps) {
             type="checkbox"
             checked={checked}
             onChange={(e) => setChecked(e.target.checked)}
-            className="h-6 w-6 shrink-0 rounded-lg accent-sage-500"
+            className="h-6 w-6 shrink-0 rounded-lg accent-oasis-500"
           />
           <span className="font-bold text-[var(--text)]">{t.lesson.practice.check}</span>
           {lang === "fr" && (

@@ -11,7 +11,7 @@ export function LanguageSwitch({ large = false }: { large?: boolean }) {
     <div
       role="radiogroup"
       aria-label={t.header.language}
-      className="flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--surface)] p-1"
+      className="game-card flex items-center gap-1 rounded-full border-2 border-[var(--border)] bg-[var(--surface)] p-1"
     >
       {langs.map((l) => {
         const active = lang === l;
@@ -27,9 +27,9 @@ export function LanguageSwitch({ large = false }: { large?: boolean }) {
             className={[
               "rounded-full font-bold transition",
               large ? "px-5 py-2 text-base" : "min-w-[2.25rem] px-2.5 py-1.5 text-sm",
-              l === "ar" ? "font-[Tajawal]" : "",
+              l === "ar" ? "font-arabic" : "",
               active
-                ? "bg-sage-500 text-white dark:bg-sage-400 dark:text-[#13200f]"
+                ? "bg-oasis-500 text-white dark:bg-oasis-400 dark:text-[#13200f]"
                 : "text-[var(--text-muted)] hover:bg-[var(--surface-alt)]",
             ].join(" ")}
           >

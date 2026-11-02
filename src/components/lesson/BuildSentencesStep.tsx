@@ -47,7 +47,7 @@ export function BuildSentencesStep({ words, sentences, onChange, onComplete }: B
 
             <div className="mb-3 flex flex-wrap gap-1.5" dir="rtl">
               {catWords.map((w) => (
-                <Pill key={w.harakat} tone={matched.includes(w) ? "sage" : "neutral"} className="!text-sm">
+                <Pill key={w.harakat} tone={matched.includes(w) ? "oasis" : "neutral"} className="!text-sm">
                   <ArabicText text={w.harakat} className="text-base leading-snug" />
                 </Pill>
               ))}
@@ -61,7 +61,7 @@ export function BuildSentencesStep({ words, sentences, onChange, onComplete }: B
               dir="rtl"
               lang="ar"
               aria-label={t.categories[cat]}
-              className="ar-content w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-3 text-xl text-[var(--text)] placeholder:text-[var(--text-faint)] focus:border-sage-400"
+              className="ar-content w-full resize-none rounded-2xl border border-[var(--border)] bg-[var(--bg)] p-3 text-xl text-[var(--text)] placeholder:text-[var(--text-faint)] focus:border-oasis-400"
             />
 
             {!text.trim() && (
@@ -94,7 +94,7 @@ export function BuildSentencesStep({ words, sentences, onChange, onComplete }: B
             )}
 
             {text.trim() && (
-              <p className={`mt-1.5 text-xs font-bold ${isValid ? "text-sage-600 dark:text-sage-300" : "text-clay-400"}`}>
+              <p className={`mt-1.5 text-xs font-bold ${isValid ? "text-oasis-600 dark:text-oasis-300" : "text-coral-400"}`}>
                 {isValid ? t.lesson.build.found(matched.length) : t.lesson.build.almost}
               </p>
             )}

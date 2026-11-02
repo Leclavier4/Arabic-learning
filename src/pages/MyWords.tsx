@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import { Card } from "../components/ui/Card";
+import { PageMascot } from "../components/mascot/PageMascot";
 import { Pill } from "../components/ui/Pill";
 import { SpeakButton } from "../components/ui/SpeakButton";
 import { ArabicText } from "../components/ui/ArabicText";
@@ -49,17 +50,11 @@ export function MyWords() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div>
-        <h1 className="flex flex-wrap items-baseline gap-x-2 text-2xl font-black text-[var(--text)]">
-          {t.myWords.title}
-          {lang === "fr" && (
-            <span lang="ar" className="ar-content text-xl text-[var(--accent)]">
-              كلماتي
-            </span>
-          )}
-        </h1>
-        <p className="text-[var(--text-muted)]">{t.myWords.count(total)}</p>
-      </div>
+      <PageMascot
+        title={lang === "fr" ? `${t.myWords.title} · كلماتي` : t.myWords.title}
+        subtitle={t.myWords.count(total)}
+        message={t.mascot.pages.myWords}
+      />
 
       <div className="relative">
         <Search size={18} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-[var(--text-faint)]" />
@@ -69,7 +64,7 @@ export function MyWords() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t.myWords.search}
           dir="auto"
-          className="w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] py-2.5 pe-3 ps-10 text-[var(--text)] placeholder:text-[var(--text-faint)] focus:border-sage-400"
+          className="game-card w-full rounded-2xl border-2 border-[var(--border)] bg-[var(--surface)] py-3 pe-3 ps-10 text-[var(--text)] placeholder:text-[var(--text-faint)] focus:border-oasis-400"
         />
       </div>
 
@@ -83,7 +78,7 @@ export function MyWords() {
             className={[
               "shrink-0 rounded-full px-3 py-1.5 text-sm font-bold transition",
               filter === f
-                ? "bg-sage-500 text-white dark:bg-sage-400 dark:text-[#13200f]"
+                ? "bg-oasis-500 text-white dark:bg-oasis-400 dark:text-[#13200f]"
                 : "bg-[var(--surface-alt)] text-[var(--text-muted)]",
             ].join(" ")}
           >
@@ -109,7 +104,12 @@ export function MyWords() {
                   </div>
                   <p className="truncate text-sm text-[var(--text-muted)]" title={word.fr}>
                     {meaningFor(word, lang)}
-                    {lang === "ar" && <span className="text-[var(--text-faint)]" dir="ltr"> · {word.fr}</span>}
+                    {lang === "ar" && (
+                      <span className="text-[var(--text-faint)]" dir="ltr">
+                        {" "}
+                        · {word.fr}
+                      </span>
+                    )}
                   </p>
                 </div>
                 <Pill tone="neutral" className="shrink-0">

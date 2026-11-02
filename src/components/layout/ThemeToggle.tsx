@@ -23,7 +23,7 @@ export function ThemeToggle() {
             onClick={() => setTheme(value)}
             className={[
               "flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-bold transition",
-              active ? "bg-sage-500 text-white dark:bg-sage-400 dark:text-[#13200f]" : "text-[var(--text-muted)] hover:bg-[var(--surface-alt)]",
+              active ? "bg-oasis-500 text-white dark:bg-oasis-400 dark:text-[#13200f]" : "text-[var(--text-muted)] hover:bg-[var(--surface-alt)]",
             ].join(" ")}
           >
             <Icon size={16} />
@@ -32,24 +32,5 @@ export function ThemeToggle() {
         );
       })}
     </div>
-  );
-}
-
-/** Bouton compact (en-tête) qui fait défiler clair → sombre → auto. */
-export function ThemeCycleButton() {
-  const { theme, setTheme } = useTheme();
-  const { t } = useLang();
-  const Icon = ICONS[theme];
-  const label = t.theme.current(t.theme[theme]);
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme(ORDER[(ORDER.indexOf(theme) + 1) % ORDER.length])}
-      aria-label={label}
-      title={label}
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] transition hover:text-[var(--text)]"
-    >
-      <Icon size={17} />
-    </button>
   );
 }
